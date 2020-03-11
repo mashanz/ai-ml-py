@@ -87,7 +87,7 @@ def train(inputs, outputs, learning_rate):
 # training.
 
 
-epochs = range(100000)
+epochs = range(10000)
 learning_rate = 0.1
 
 for epochs in epochs:
