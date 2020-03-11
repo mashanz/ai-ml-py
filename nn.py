@@ -17,7 +17,7 @@ The objective is to create a model (neural net) that behaves asn an XOR Gate:
 1 XOR 1 -> 0
 '''
 
-import lamaproses
+import lib.processelapse
 import tensorflow.keras.backend as k
 import tensorflow as tf
 import numpy as np

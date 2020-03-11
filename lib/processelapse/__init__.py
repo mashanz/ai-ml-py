@@ -1,3 +1,11 @@
+"""
+LamaProses
+=====
+
+Mengecheck Waktu mulai dan berhenti sebuah program python.
+"""
+
+
 import atexit
 from time import time, strftime, localtime
 from datetime import timedelta
