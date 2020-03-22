@@ -86,7 +86,6 @@ def train(inputs, outputs, learning_rate):
 # decrease, this means that your model is successfully
 # training.
 
-
 epochs = range(10000)
 learning_rate = 0.1
 
