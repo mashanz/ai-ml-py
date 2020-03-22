@@ -99,13 +99,13 @@ for epochs in epochs:
 
 # Test the model with a suitable domain
 x_ = tf.convert_to_tensor(np.array([[0, 0]]), dtype=tf.float16)
-print(f"0 XOR 0 -> {forward(x_, w1, w2).numpy()}")
+print(f"0 XOR 0 -> {forward(x_, w1, w2).numpy()} = { (0, 1)[ float(forward(x_, w1, w2).numpy()[0][0]) > 0.5 ]}")
 
 x_ = tf.convert_to_tensor(np.array([[0, 1]]), dtype=tf.float16)
-print(f"0 XOR 1 -> {forward(x_, w1, w2).numpy()}")
+print(f"0 XOR 1 -> {forward(x_, w1, w2).numpy()} = { (0, 1)[ float(forward(x_, w1, w2).numpy()[0][0]) > 0.5 ]}")
 
 x_ = tf.convert_to_tensor(np.array([[1, 0]]), dtype=tf.float16)
-print(f"1 XOR 0 -> {forward(x_, w1, w2).numpy()}")
+print(f"1 XOR 0 -> {forward(x_, w1, w2).numpy()} = { (0, 1)[ float(forward(x_, w1, w2).numpy()[0][0]) > 0.5 ]}")
 
 x_ = tf.convert_to_tensor(np.array([[1, 1]]), dtype=tf.float16)
-print(f"1 XOR 1 -> {forward(x_, w1, w2).numpy()}")
+print(f"1 XOR 1 -> {forward(x_, w1, w2).numpy()} = { (0, 1)[ float(forward(x_, w1, w2).numpy()[0][0]) > 0.5 ]}")
