@@ -42,18 +42,20 @@ Y = tf.convert_to_tensor(Y, dtype=tf.float16)
 # w2 is a matric with dims [3, 1]
 # Coastin them to variable since value can be changed during optimisation
 w1 = tf.Variable(np.random.randn(2, 3), dtype=tf.float16)
-w2 = tf.Variable(np.random.randn(3, 1), dtype=tf.float16)
+w2 = tf.Variable(np.random.randn(3, 3), dtype=tf.float16)
+w3 = tf.Variable(np.random.randn(3, 1), dtype=tf.float16)
 
 # Create a function that propagates X throught the network
 @tf.function
-def forward(X, w1, w2):
+def forward(X, w1, w2, w3):
     X = tf.sigmoid(tf.matmul(X, w1))
     X = tf.sigmoid(tf.matmul(X, w2))
+    X = tf.sigmoid(tf.matmul(X, w3))
     return X
 
 
 # Print
-print(forward(X, w1, w2))
+print(forward(X, w1, w2, w3))
 
 # From the previous sliide we can see that
 # the model is just guessing. we need to implement
@@ -73,12 +75,13 @@ def loss(predicted_y, target_y):
 def train(inputs, outputs, learning_rate):
     with tf.GradientTape() as tape:
         # Calculate loss
-        current_loss = loss(forward(X, w1, w2), outputs)
+        current_loss = loss(forward(X, w1, w2, w3), outputs)
     # find gradien between the loss and each weight matrix
-    dW1, dW2 = tape.gradient(current_loss, [w1, w2])
+    dW1, dW2, dW3 = tape.gradient(current_loss, [w1, w2, w3])
     # backpropate and tune weights
     w1.assign_sub(learning_rate * dW1)
     w2.assign_sub(learning_rate * dW2)
+    w3.assign_sub(learning_rate * dW3)
     del tape
 
 # Train the model for a number of iteration (epochs)
@@ -92,20 +95,20 @@ learning_rate = 0.1
 
 for epochs in epochs:
     # Calculate loss to output.
-    current_loss = loss(forward(X, w1, w2), Y)
+    current_loss = loss(forward(X, w1, w2, w3), Y)
     # Forward the input data and tweak weights.
     train(X, Y, learning_rate)
     print("Current Loss: {:2.5f}".format(current_loss))
 
 # Test the model with a suitable domain
 x_ = tf.convert_to_tensor(np.array([[0, 0]]), dtype=tf.float16)
-print(f"0 XOR 0 -> {forward(x_, w1, w2).numpy()} = { (0, 1)[ float(forward(x_, w1, w2).numpy()[0][0]) > 0.5 ]}")
+print(f"0 XOR 0 -> {forward(x_, w1, w2, w3).numpy()} = { (0, 1)[ float(forward(x_, w1, w2, w3).numpy()[0][0]) > 0.5 ]}")
 
 x_ = tf.convert_to_tensor(np.array([[0, 1]]), dtype=tf.float16)
-print(f"0 XOR 1 -> {forward(x_, w1, w2).numpy()} = { (0, 1)[ float(forward(x_, w1, w2).numpy()[0][0]) > 0.5 ]}")
+print(f"0 XOR 1 -> {forward(x_, w1, w2, w3).numpy()} = { (0, 1)[ float(forward(x_, w1, w2, w3).numpy()[0][0]) > 0.5 ]}")
 
 x_ = tf.convert_to_tensor(np.array([[1, 0]]), dtype=tf.float16)
-print(f"1 XOR 0 -> {forward(x_, w1, w2).numpy()} = { (0, 1)[ float(forward(x_, w1, w2).numpy()[0][0]) > 0.5 ]}")
+print(f"1 XOR 0 -> {forward(x_, w1, w2, w3).numpy()} = { (0, 1)[ float(forward(x_, w1, w2, w3).numpy()[0][0]) > 0.5 ]}")
 
 x_ = tf.convert_to_tensor(np.array([[1, 1]]), dtype=tf.float16)
-print(f"1 XOR 1 -> {forward(x_, w1, w2).numpy()} = { (0, 1)[ float(forward(x_, w1, w2).numpy()[0][0]) > 0.5 ]}")
+print(f"1 XOR 1 -> {forward(x_, w1, w2, w3).numpy()} = { (0, 1)[ float(forward(x_, w1, w2, w3).numpy()[0][0]) > 0.5 ]}")
