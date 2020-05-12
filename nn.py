@@ -101,14 +101,12 @@ for epochs in epochs:
     print("Current Loss: {:2.5f}".format(current_loss))
 
 # Test the model with a suitable domain
-x_ = tf.convert_to_tensor(np.array([[0, 0]]), dtype=tf.float16)
-print(f"0 XOR 0 -> {forward(x_, w1, w2, w3).numpy()} = { (0, 1)[ float(forward(x_, w1, w2, w3).numpy()[0][0]) > 0.5 ]}")
+a = 0
+b = 0
 
-x_ = tf.convert_to_tensor(np.array([[0, 1]]), dtype=tf.float16)
-print(f"0 XOR 1 -> {forward(x_, w1, w2, w3).numpy()} = { (0, 1)[ float(forward(x_, w1, w2, w3).numpy()[0][0]) > 0.5 ]}")
+x_ = tf.convert_to_tensor(np.array([[a, b]]), dtype=tf.float16)
+fw = forward(x_, w1, w2, w3).numpy()
 
-x_ = tf.convert_to_tensor(np.array([[1, 0]]), dtype=tf.float16)
-print(f"1 XOR 0 -> {forward(x_, w1, w2, w3).numpy()} = { (0, 1)[ float(forward(x_, w1, w2, w3).numpy()[0][0]) > 0.5 ]}")
+result = (0, 1)[float(fw[0][0]) > 0.5]
 
-x_ = tf.convert_to_tensor(np.array([[1, 1]]), dtype=tf.float16)
-print(f"1 XOR 1 -> {forward(x_, w1, w2, w3).numpy()} = { (0, 1)[ float(forward(x_, w1, w2, w3).numpy()[0][0]) > 0.5 ]}")
+print(f"{a} XOR {b} -> {fw} = {result}")
